@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hakerrr · Links</title>
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Playfair Display (display) + DM Sans (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root {
+      --accent:  #7dd3fc;
+      --accent2: #a78bfa;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: linear-gradient(135deg, #0f0f12 0%, #0d1b2e 50%, #0a0f1e 100%);
+      min-height: 100vh;
+      background-attachment: fixed;
+    }
+
+    /* Noise grain */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-size: 180px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    /* Ambient blobs */
+    .blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+      z-index: 0;
+      animation: drift 12s ease-in-out infinite alternate;
+    }
+    .blob-1 { width:420px; height:420px; background:rgba(125,211,252,0.06); top:-120px; left:-80px; }
+    .blob-2 { width:340px; height:340px; background:rgba(167,139,250,0.07); bottom:-80px; right:-60px; animation-duration:15s; animation-direction:alternate-reverse; }
+
+    @keyframes drift {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(30px,20px) scale(1.06); }
+    }
+
+    .font-display { font-family: 'Playfair Display', serif; }
+
+    /* Spinning avatar ring */
+    .avatar-ring {
+      background: conic-gradient(from 0deg, var(--accent), var(--accent2), var(--accent));
+      animation: spin-ring 4s linear infinite;
+      border-radius: 50%;
+      padding: 3px;
+    }
+    @keyframes spin-ring { to { transform: rotate(360deg); } }
+
+    /* Page fade-in */
+    .page-content {
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.7s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(22px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* Stagger */
+    .stagger > * { animation: fadeUp 0.6s ease both; }
+    .stagger > *:nth-child(1) { animation-delay: 0.10s; }
+    .stagger > *:nth-child(2) { animation-delay: 0.18s; }
+    .stagger > *:nth-child(3) { animation-delay: 0.26s; }
+    .stagger > *:nth-child(4) { animation-delay: 0.34s; }
+    .stagger > *:nth-child(5) { animation-delay: 0.42s; }
+    .stagger > *:nth-child(6) { animation-delay: 0.50s; }
+
+    /* Glass link button */
+    .link-btn {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      width: 100%;
+      padding: 1rem 1.375rem;
+      border-radius: 14px;
+      text-decoration: none;
+      color: #e2e8f0;
+      background: rgba(255,255,255,0.045);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: transform 0.22s cubic-bezier(.34,1.56,.64,1),
+                  background 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+      overflow: hidden;
+    }
+    .link-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.06) 50%, transparent 65%);
+      transform: translateX(-100%);
+      transition: transform 0.5s ease;
+    }
+    .link-btn:hover::before { transform: translateX(100%); }
+    .link-btn:hover {
+      transform: scale(1.025) translateY(-2px);
+      background: rgba(255,255,255,0.085);
+      border-color: rgba(125,211,252,0.28);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35), 0 0 0 1px rgba(125,211,252,0.12), inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    .link-btn:active { transform: scale(0.99) translateY(0); }
+
+    .link-btn .dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; transition:transform 0.22s ease; }
+    .link-btn:hover .dot { transform: scale(1.35); }
+
+    .link-btn .btn-label { flex:1; font-size:0.9375rem; font-weight:500; letter-spacing:0.01em; }
+
+    .link-btn .btn-arrow {
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      flex-shrink: 0;
+      color: var(--accent);
+    }
+    .link-btn:hover .btn-arrow { opacity:1; transform:translateX(0); }
+
+    /* Social button */
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      color: #94a3b8;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.07);
+      text-decoration: none;
+      transition: color 0.2s ease, background 0.2s ease,
+                  transform 0.22s cubic-bezier(.34,1.56,.64,1),
+                  border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .social-btn:hover {
+      color: #fff;
+      background: rgba(225,100,150,0.18);
+      border-color: rgba(225,100,150,0.4);
+      transform: scale(1.18) translateY(-2px);
+      box-shadow: 0 6px 20px rgba(225,100,150,0.25);
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08) 30%, rgba(255,255,255,0.08) 70%, transparent);
+    }
+  </style>
+</head>
+
+<body class="flex items-center justify-center px-4 py-12">
+
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+
+  <main class="page-content w-full max-w-sm sm:max-w-md">
+
+    <!-- ── Profile ── -->
+    <header class="flex flex-col items-center text-center mb-9">
+
+      <!-- Avatar with spinning ring -->
+      <div class="avatar-ring mb-4" style="width:92px;height:92px;">
+        <div style="width:86px;height:86px;border-radius:50%;overflow:hidden;background:#1e293b;">
+          <!--
+            പ്രൊഫൈൽ ഫോട്ടോ വേണമെങ്കിൽ src="" ൽ URL കൊടുക്കൂ
+          -->
+          <img
+            src="https://api.dicebear.com/8.x/shapes/svg?seed=hakerrr&backgroundColor=0f172a"
+            alt="Hakerrr"
+            style="width:100%;height:100%;object-fit:cover;"
+            onerror="this.style.display='none'"
+          />
+        </div>
+      </div>
+
+      <!-- Name -->
+      <h1 class="font-display text-3xl sm:text-4xl font-bold text-white tracking-tight mb-1">
+        Hakerrr
+      </h1>
+
+      <!-- Tagline — വേണമെങ്കിൽ മാറ്റാം അല്ലെങ്കിൽ ഡിലീറ്റ് ചെയ്യാം -->
+      <p class="text-sky-400 text-xs font-medium tracking-widest uppercase mt-1">
+        BGMI Player
+      </p>
+
+    </header>
+
+    <!-- ── Link Buttons ──
+         ലിങ്ക് add ചെയ്യാൻ: href="#" ൽ URL replace ചെയ്യൂ
+         ലേബൽ മാറ്റാൻ: btn-label text edit ചെയ്യൂ
+    ── -->
+    <nav class="stagger flex flex-col gap-3 mb-8" aria-label="Links">
+
+      <a href="#" class="link-btn">
+        <span class="dot bg-sky-400"></span>
+        <span class="btn-label">Link 1</span>
+        <i data-lucide="arrow-right" class="btn-arrow" style="width:16px;height:16px;"></i>
+      </a>
+
+      <a href="#" class="link-btn">
+        <span class="dot bg-violet-400"></span>
+        <span class="btn-label">Link 2</span>
+        <i data-lucide="arrow-right" class="btn-arrow" style="width:16px;height:16px;"></i>
+      </a>
+
+      <a href="#" class="link-btn">
+        <span class="dot bg-emerald-400"></span>
+        <span class="btn-label">Link 3</span>
+        <i data-lucide="arrow-right" class="btn-arrow" style="width:16px;height:16px;"></i>
+      </a>
+
+      <a href="#" class="link-btn">
+        <span class="dot bg-amber-400"></span>
+        <span class="btn-label">Link 4</span>
+        <i data-lucide="arrow-right" class="btn-arrow" style="width:16px;height:16px;"></i>
+      </a>
+
+      <a href="#" class="link-btn">
+        <span class="dot bg-rose-400"></span>
+        <span class="btn-label">Link 5</span>
+        <i data-lucide="arrow-right" class="btn-arrow" style="width:16px;height:16px;"></i>
+      </a>
+
+      <a href="#" class="link-btn">
+        <span class="dot bg-teal-400"></span>
+        <span class="btn-label">Link 6</span>
+        <i data-lucide="arrow-right" class="btn-arrow" style="width:16px;height:16px;"></i>
+      </a>
+
+    </nav>
+
+    <!-- ── Divider ── -->
+    <div class="divider mb-7"></div>
+
+    <!-- ── Instagram Only — centered ── -->
+    <footer class="flex items-center justify-center mb-8">
+      <a
+        href="https://www.instagram.com/_ahhdaarsh?igsh=MW0wbm41eG44cXdkdw=="
+        target="_blank"
+        rel="noopener"
+        class="social-btn"
+        aria-label="Instagram"
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+        </svg>
+      </a>
+    </footer>
+
+    <p class="text-center text-slate-600 text-xs">© 2026 Hakerrr</p>
+
+  </main>
+
+  <script>lucide.createIcons();</script>
+
+</body>
+</html>
